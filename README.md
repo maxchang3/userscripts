@@ -36,7 +36,7 @@
 
 ---
 
-## 知乎历史记录
+### 知乎历史记录
 
 [[Github](./zhihu-history/)] | [[GreasyFork](https://greasyfork.org/scripts/459852)]
 
