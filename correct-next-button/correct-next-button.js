@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         矫正 b 站自动连播按钮 - 分P、合集、单视频开关分别独立
-// @namespace    https://zhangmaimai.com
-// @version      0.3
+// @namespace    https://maxchang.me
+// @version      0.4
 // @description  关于我不想要哔哩哔哩自动连播只想在分 P 中跳转但是阿 b 把他们混为一谈这件事。
 // @author       MaxChang3
 // @match        https://www.bilibili.com/video/*
@@ -35,7 +35,7 @@
             'multipart': GM_getValue(type.MULTIPART),
             'video': GM_getValue(type.VIDEO)
         })
-        document.querySelector('.switch-button').addEventListener('click', () => {
+        document.querySelector('.switch-btn').addEventListener('click', () => {
             GM_setValue(pageType, !app.continuousPlay)
         })
     }
