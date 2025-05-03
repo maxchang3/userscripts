@@ -36,7 +36,7 @@
 3. 点击确认按钮
    - 由于未知原因，首次获取时可能会导致账号掉线。
    - 此时页面会自动刷新，请重新登录并刷新页面，再次按照提示获取。
-4. 获取 `access_key` 后，页面会自动刷新，如果你使用 Tampermonkey 此时会弹出授权提示，请按需点击「Allow ...」（推荐 Always）：
+4. 获取 `access_key` 后，页面会自动刷新，如果你使用 Tampermonkey 此时会弹出授权提示，请按需点击「Allow ...」（推荐 Always allow domain）。
    <p>
       <img src="https://github.com/user-attachments/assets/2eed3fad-cdc2-495b-81bd-539019e966eb" width="50%"/>
    </p>
