@@ -13,7 +13,7 @@
 // @grant        unsafeWindow
 // @require      https://update.greasyfork.org/scripts/400945/1055319/libBilibiliToken.js
 // @require      https://fastly.jsdelivr.net/npm/gm-extra@0.0.1
-// @run-at       document-idle
+// @run-at       document-start
 // @license      MIT
 // ==/UserScript==
 /// <reference path="./types/global.d.ts" />
