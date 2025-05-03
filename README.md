@@ -16,6 +16,8 @@
 
 哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合使用[哔哩哔哩网页版显示 IP 属地](https://greasyfork.org/scripts/466815)脚本。
 
+---
+
 ### “如需浏览，请长按网址复制后使用浏览器访问” 
 
 [[Github](./anti-wechat-anti-external-links)] | [[GreasyFork](https://greasyfork.org/scripts/406675)]
