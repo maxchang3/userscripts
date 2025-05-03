@@ -11,7 +11,5 @@
 // ==/UserScript==
 
 ;(() => {
-    document
-        .querySelectorAll('[id$="markup_markdown"]')
-        .forEach((x) => x.click())
+    document.querySelectorAll('[id$="markup_markdown"]').forEach((x) => x.click())
 })()

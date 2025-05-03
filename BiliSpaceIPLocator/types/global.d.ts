@@ -64,11 +64,7 @@ declare global {
         /**
          * 对参数签名
          */
-        public static signQuery(
-            params: string,
-            ts?: number,
-            secretKey?: string
-        ): string
+        public static signQuery(params: string, ts?: number, secretKey?: string): string
         /**
          * 获取此时浏览器登录账号 Token
          */
@@ -79,9 +75,7 @@ declare global {
          * 由于上下文环境的限制，GM_xmlhttpRequest 需要单独处理
          * fetch 与 GM_xmlhttpRequest 的兼容实现过于复杂，因此选择使用 XMLHttpRequest
          */
-        public static XHR<T>(
-            XHROptions: XHROptions
-        ): Promise<XHRResponse<T> | undefined>
+        public static XHR<T>(XHROptions: XHROptions): Promise<XHRResponse<T> | undefined>
     }
 
     type SelectorOptions = {

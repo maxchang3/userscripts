@@ -26,11 +26,7 @@
         const videoData = app.videoData
         const { videos: videosCount } = videoData
         const pageType =
-            videosCount > 1
-                ? type.MULTIPART
-                : app.isSection
-                  ? type.COLLECTION
-                  : type.VIDEO
+            videosCount > 1 ? type.MULTIPART : app.isSection ? type.COLLECTION : type.VIDEO
         const pageStatus = app.continuousPlay
         const userStatus = GM_getValue(pageType)
         if (userStatus === undefined) {
@@ -48,9 +44,7 @@
         })
     }
     const main = () => {
-        if (
-            location.href.startsWith('https://www.bilibili.com/medialist/play/')
-        ) {
+        if (location.href.startsWith('https://www.bilibili.com/medialist/play/')) {
             // todo
         } else {
             const interval = setInterval(() => {

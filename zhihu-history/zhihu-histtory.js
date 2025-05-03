@@ -185,8 +185,7 @@ const bindHistoryEvent = (e) => {
 }
 
 /** 从 localStorage 中取回历史记录 @returns {ZHContentData[]} */
-const getHistoryList = () =>
-    JSON.parse(window.localStorage.getItem('ZH_HISTORY'))
+const getHistoryList = () => JSON.parse(window.localStorage.getItem('ZH_HISTORY'))
 
 /** 缓存数组 */
 const HISTORYS_CACHE = { VALUE: '', CNT: 0, LAST_CNT: -1 }
@@ -194,8 +193,7 @@ const HISTORYS_CACHE = { VALUE: '', CNT: 0, LAST_CNT: -1 }
 const getHistoryListElements = () => {
     // 做了个简单的缓存机制，如果距离上次点开前进行了若干次点击动作，则重新取回数据
     // 否则就从直接缓存中拿回来
-    if (HISTORYS_CACHE.LAST_CNT === HISTORYS_CACHE.CNT)
-        return HISTORYS_CACHE.VALUE
+    if (HISTORYS_CACHE.LAST_CNT === HISTORYS_CACHE.CNT) return HISTORYS_CACHE.VALUE
     const type2Class = {
         answer: 'zhh-type-answer',
         article: 'zhh-type-article',
@@ -223,10 +221,7 @@ document
 // 插入历史记录卡片
 document
     .querySelector('.Topstory-container')
-    .children[1].children[1].insertAdjacentHTML(
-        'afterbegin',
-        `<zh-history-card></zh-history-card>`
-    )
+    .children[1].children[1].insertAdjacentHTML('afterbegin', `<zh-history-card></zh-history-card>`)
 
 // 插入 dialog
 document.body.insertAdjacentHTML('beforeEnd', `<zh-dialog></zh-dialog>`)
@@ -252,8 +247,7 @@ const callback = (mutationsList) => {
         mutation.addedNodes.forEach((node) => {
             /** @type {HTMLElement | undefined} */
             const contentItem = node.querySelector('.ContentItem')
-            if (contentItem)
-                contentItem.addEventListener('click', bindHistoryEvent)
+            if (contentItem) contentItem.addEventListener('click', bindHistoryEvent)
         })
     }
 }
