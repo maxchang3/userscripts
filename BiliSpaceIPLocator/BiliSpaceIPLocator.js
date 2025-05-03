@@ -123,35 +123,6 @@ const getLocation = async (/** @type {string} */ vmid) => {
     }
 }
 
-const injectLocation = (
-    /** @type {string} */ location,
-    /** @type {HTMLDivElement} */ upInfoMainElement
-) => {
-    const upInfoTopElement = upInfoMainElement.querySelector(
-        '.upinfo-detail__top'
-    )
-    if (!upInfoTopElement) {
-        logger.error('未找到 UP 主信息元素')
-        return
-    }
-
-    const locationElement = document.createElement('div')
-
-    Object.assign(locationElement.style, {
-        color: '#fff',
-        fontSize: '10px',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        borderRadius: '4px',
-        padding: '.4em',
-        marginLeft: '.4em',
-        display: 'inline-block',
-    })
-
-    locationElement.className = 'location'
-    locationElement.innerText = location
-    upInfoTopElement.appendChild(locationElement)
-}
-
 logger.log('脚本加载完成')
 
 const acquireAccessKey = async () => {
@@ -192,12 +163,41 @@ const requireAccessKey = async () => {
     }
 }
 
+const injectLocation = (
+    /** @type {string} */ location,
+    /** @type {HTMLDivElement} */ upInfoMainElement,
+    /** @type {string} */ upInfoSelector,
+    /** @type {Record< string, string>} */ overrideStyle = {}
+) => {
+    const upInfoTopElement = upInfoMainElement.querySelector(upInfoSelector)
+    if (!upInfoTopElement) {
+        logger.error('未找到 UP 主信息元素')
+        return
+    }
+
+    const locationElement = document.createElement('div')
+
+    Object.assign(locationElement.style, {
+        color: '#fff',
+        fontSize: '10px',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        borderRadius: '4px',
+        padding: '.4em',
+        marginLeft: '.4em',
+        verticalAlign: 'middle',
+        display: 'inline-block',
+        ...overrideStyle,
+    })
+
+    locationElement.className = 'location'
+    locationElement.innerText = location
+    upInfoTopElement.appendChild(locationElement)
+}
+
 if (hasToken)
     logger.log(
         '已获取 Access Key',
-        accessKey.substring(0, 4) +
-            '****' +
-            accessKey.substring(accessKey.length - 4)
+        accessKey.substring(0, 4) + '****' + accessKey.substring(accessKey.length - 4)
     )
 
 GM.registerMenuCommand(
@@ -206,12 +206,22 @@ GM.registerMenuCommand(
         await acquireAccessKey()
     }
 )
+const main = async () => {
+    const biliMainHeader = await GmExtra.querySelector(document.body, '#biliMainHeader')
+    const isFreshSpace = biliMainHeader?.tagName === 'HEADER'
 
-const appElement = /** @type {HTMLElement} */ (document.querySelector('#app'))
+    const appElement = await GmExtra.querySelector(document.body, '#app')
 
-// 等待 Header 中的信息加载出来
-GmExtra.querySelector(appElement, '.upinfo__main').then(
-    async (upInfoMainElement) => {
+    if (!appElement) {
+        logger.error('未找到 #app 元素')
+        return
+    }
+
+    const upInfoMainSelector = isFreshSpace ? '.upinfo__main' : '.h-inner'
+    const upInfoSelector = isFreshSpace ? '.upinfo-detail__top' : '.h-basic div'
+
+    // 等待 Header 中的信息加载出来
+    GmExtra.querySelector(appElement, upInfoMainSelector).then(async (upInfoMainElement) => {
         if (!hasToken) {
             requireAccessKey()
             return
@@ -220,11 +230,8 @@ GmExtra.querySelector(appElement, '.upinfo__main').then(
             logger.error('未找到 UP 主信息元素')
             return
         }
-        const URLWithoutQuery =
-            window.location.origin + window.location.pathname
-        const vmidMatch = URLWithoutQuery.match(
-            /space\.bilibili\.com\/(\d+)(?:\/|$)/
-        )
+        const URLWithoutQuery = window.location.origin + window.location.pathname
+        const vmidMatch = URLWithoutQuery.match(/space\.bilibili\.com\/(\d+)(?:\/|$)/)
         if (!vmidMatch) {
             logger.error('未找到 vmid', window.location.href)
             return
@@ -235,11 +242,19 @@ GmExtra.querySelector(appElement, '.upinfo__main').then(
             logger.error('获取 IP 属地失败')
             return
         }
-
         logger.log('获取 IP 属地成功', location)
         injectLocation(
             location,
-            /** @type {HTMLDivElement} */ (upInfoMainElement)
+            /** @type {HTMLDivElement} */ (upInfoMainElement),
+            upInfoSelector,
+            isFreshSpace
+                ? {}
+                : {
+                      padding: '0 5px',
+                      marginLeft: '5px',
+                  }
         )
-    }
-)
+    })
+}
+
+main()
