@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Slash To Search
 // @name:zh-CN     斜杠搜索 - Slash To Search
-// @namespace      https://zhangmaimai.com/
+// @namespace      https://maxchang.me/
 // @version        0.2
 // @description    Type Slash ('/') to focus on search input, customized for some websites only.
 // @description:zh-CN 使用 斜杠 ('/')  聚焦输入框，仅针对部分网页定制。

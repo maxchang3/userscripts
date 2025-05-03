@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         知乎历史记录
-// @namespace    https://zhangmaimai.com
+// @namespace    https://maxchang.me
 // @version      0.7
 // @description  给知乎添加历史记录
 // @author       MaxChang3

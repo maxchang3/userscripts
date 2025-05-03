@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         “如需浏览，请长按网址复制后使用浏览器访问”——Anti Wechat Anti External Links
-// @namespace    https://zhangmaimai.com
+// @namespace    https://maxchang.me
 // @version      1.1
 // @description  微信PC内置浏览器复制链接或使用其他浏览器打开也提示“如需浏览，请长按网址复制后使用浏览器访问”，本脚本应用后可以直接跳转目标网址。
 // @author       Max39
