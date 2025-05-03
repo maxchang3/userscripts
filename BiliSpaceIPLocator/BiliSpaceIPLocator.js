@@ -218,7 +218,9 @@ GmExtra.querySelector(document.body, '.upinfo__main').then(
             logger.error('未找到 UP 主信息元素')
             return
         }
-        const vmidMatch = window.location.href.match(
+        const URLWithoutQuery =
+            window.location.origin + window.location.pathname
+        const vmidMatch = URLWithoutQuery.match(
             /space\.bilibili\.com\/(\d+)(?:\/|$)/
         )
         if (!vmidMatch) {
