@@ -192,7 +192,13 @@ const requireAccessKey = async () => {
     }
 }
 
-if (hasToken) logger.log('已获取 Access Key', accessKey)
+if (hasToken)
+    logger.log(
+        '已获取 Access Key',
+        accessKey.substring(0, 4) +
+            '****' +
+            accessKey.substring(accessKey.length - 4)
+    )
 
 GM.registerMenuCommand(
     `${hasToken ? '【✅ 已获取】' : '【❌ 未获取】'}获取 Access Key`,
