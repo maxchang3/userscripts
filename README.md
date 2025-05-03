@@ -2,11 +2,15 @@
 
 # Max Chang 的用户脚本合集
 
-此项目将先前我编写的一些「**比较小型的、功能单一的、没必要单独成一个项目的**」的用户脚本整合在一起。方便规范化维护与问题反馈，也方便大家查找使用。
+[![License](https://img.shields.io/github/license/maxchang3/userscripts?style=flat-square)](LICENSE)
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome)](https://biomejs.dev)
+[![code style](https://img.shields.io/badge/Max_Chang-black?style=flat&logoColor=black&label=Code%20Style)](https://github.com/maxchang3/biome-config)<sup><s>(Is that really a thing?)</s></sup>
 
-后续某个脚本如果变得比较大型，我会考虑单独建立一个项目。
+整合了我的编写的「**小型、功能单一**」的用户脚本，方便维护和反馈，同时也方便大家查找使用。
 
-> 部分脚本是早些时候写的，可能会有一些问题，很多地方也禀承着能用就行的原则，所以可能有很多不优雅的地方。欢迎大家在 issue 中反馈问题，也欢迎 PR！
+对于日后发展为较为复杂的脚本，我将考虑为其创建独立的项目。
+
+> 许多早期脚本秉承了「能用就行」的原则，因此代码可能不够优雅，也未考虑适配性。欢迎通过 issue 反馈问题或提交 PR 改进！
 
 ## 导航
 
