@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@maxchang/userscripts",
+  "version": "0.0.1",
+  "author": "maxchang3",
+  "license": "MIT",
+  "scripts": {
+    "lint": "biome check",
+    "lint:fix": "biome check --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@maxchang/biome-config": "^0.0.4",
+    "@types/tampermonkey": "^5.0.4"
+  }
+}
