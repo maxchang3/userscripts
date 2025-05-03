@@ -221,40 +221,48 @@ const main = async () => {
     const upInfoSelector = isFreshSpace ? '.upinfo-detail__top' : '.h-basic div'
 
     // 等待 Header 中的信息加载出来
-    GmExtra.querySelector(appElement, upInfoMainSelector).then(async (upInfoMainElement) => {
-        if (!hasToken) {
-            requireAccessKey()
-            return
-        }
-        if (!upInfoMainElement) {
-            logger.error('未找到 UP 主信息元素')
-            return
-        }
-        const URLWithoutQuery = window.location.origin + window.location.pathname
-        const vmidMatch = URLWithoutQuery.match(/space\.bilibili\.com\/(\d+)(?:\/|$)/)
-        if (!vmidMatch) {
-            logger.error('未找到 vmid', window.location.href)
-            return
-        }
-        if (!hasToken) return
-        const location = await getLocation(vmidMatch[1])
-        if (!location) {
-            logger.error('获取 IP 属地失败')
-            return
-        }
-        logger.log('获取 IP 属地成功', location)
-        injectLocation(
-            location,
-            /** @type {HTMLDivElement} */ (upInfoMainElement),
-            upInfoSelector,
-            isFreshSpace
-                ? {}
-                : {
-                      padding: '0 5px',
-                      marginLeft: '5px',
-                  }
-        )
-    })
+    const upInfoMainElement = await GmExtra.querySelector(appElement, upInfoMainSelector)
+
+    if (!hasToken) {
+        requireAccessKey()
+        return
+    }
+
+    if (!upInfoMainElement) {
+        logger.error('未找到 UP 主信息元素')
+        return
+    }
+
+    const URLWithoutQuery = window.location.origin + window.location.pathname
+    const vmidMatch = URLWithoutQuery.match(/space\.bilibili\.com\/(\d+)(?:\/|$)/)
+
+    if (!vmidMatch || vmidMatch.length < 2) {
+        logger.error('未找到 vmid', window.location.href)
+        return
+    }
+
+    const vmid = vmidMatch[1]
+
+    const location = await getLocation(vmid)
+
+    if (!location) {
+        logger.error('获取 IP 属地失败')
+        return
+    }
+
+    logger.log(`获取 ${vmid}  IP 属地成功`, location)
+
+    injectLocation(
+        location,
+        /** @type {HTMLDivElement} */ (upInfoMainElement),
+        upInfoSelector,
+        isFreshSpace
+            ? {}
+            : {
+                  padding: '0 5px',
+                  marginLeft: '5px',
+              }
+    )
 }
 
 main()
