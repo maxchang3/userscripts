@@ -1,6 +1,11 @@
-# 哔哩哔哩主页显示 IP 属地 - BiliSpaceIPLocator
+<p align="center">
+  <img width="300" src="https://github.com/user-attachments/assets/98e82a51-d85d-49cf-aed8-01ba1d8fb383">
+</p>
 
-[[GreasyFork](https://greasyfork.org/scripts/534807)]
+# 哔哩哔哩主页显示 IP 属地 - BiliSpaceIPLocator 
+
+![Greasy Fork Downloads](https://img.shields.io/greasyfork/dt/534807?style=flat-square&color=444)  [![Install at Greasy Fork](https://img.shields.io/badge/Install_At-Greasy_Fork-7D160D)](https://greasyfork.org/scripts/534807)
+
 
 在哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合「[哔哩哔哩网页版显示 IP 属地](https://github.com/MaxChang3/Bilibili-Web-Show-IP-Location)」使用。
 
