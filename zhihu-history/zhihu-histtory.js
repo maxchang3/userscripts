@@ -76,9 +76,9 @@ class ZHHDialog extends HTMLElement {
         const dialog = document.createElement('dialog')
         dialog.innerHTML = `<div class="inner" tabindex="0"></div>`
         // 点击弹出层周围直接关闭
-        dialog.addEventListener('click', (e => {
+        dialog.addEventListener('click', (e) => {
             if (!e.target.closest('div')) e.target.close()
-        }))
+        })
         const inner = document.createElement('div')
         inner.setAttribute('class', 'inner')
         inner.setAttribute('tabindex', '0')
@@ -157,7 +157,7 @@ customElements.define('zh-history-card', ZHHistoryCard)
  *   type: 'answter' | 'article',
  *   url?: string
  * }} ZHContentData
-*/
+ */
 /** 给元素绑定添加历史记录的事件
  * @param {Event} e Event
  */
@@ -174,18 +174,19 @@ const bindHistoryEvent = (e) => {
     contentData.url = url
     const historysData = window.localStorage.getItem('ZH_HISTORY')
     /** @type {ZHContentData[]} */
-    const histroys = historysData ?
-        JSON.parse(historysData)
-            .filter(histroy => histroy.itemId != contentData.itemId)
-            .concat(contentData) :
-        [contentData]
+    const histroys = historysData
+        ? JSON.parse(historysData)
+              .filter((histroy) => histroy.itemId !== contentData.itemId)
+              .concat(contentData)
+        : [contentData]
     if (histroys.length > HISTORYS_LIMIT) histroys.shift()
     window.localStorage.setItem('ZH_HISTORY', JSON.stringify(histroys))
     HISTORYS_CACHE.CNT++
 }
 
 /** 从 localStorage 中取回历史记录 @returns {ZHContentData[]} */
-const getHistoryList = () => JSON.parse(window.localStorage.getItem('ZH_HISTORY'))
+const getHistoryList = () =>
+    JSON.parse(window.localStorage.getItem('ZH_HISTORY'))
 
 /** 缓存数组 */
 const HISTORYS_CACHE = { VALUE: '', CNT: 0, LAST_CNT: -1 }
@@ -193,13 +194,20 @@ const HISTORYS_CACHE = { VALUE: '', CNT: 0, LAST_CNT: -1 }
 const getHistoryListElements = () => {
     // 做了个简单的缓存机制，如果距离上次点开前进行了若干次点击动作，则重新取回数据
     // 否则就从直接缓存中拿回来
-    if (HISTORYS_CACHE.LAST_CNT === HISTORYS_CACHE.CNT) return HISTORYS_CACHE.VALUE
-    const type2Class = { answer: 'zhh-type-answer', article: 'zhh-type-article' }
+    if (HISTORYS_CACHE.LAST_CNT === HISTORYS_CACHE.CNT)
+        return HISTORYS_CACHE.VALUE
+    const type2Class = {
+        answer: 'zhh-type-answer',
+        article: 'zhh-type-article',
+    }
     /** @type {string} */
-    const ret = getHistoryList().map(({ title, url, authorName, type }) =>
-        `<li>
+    const ret = getHistoryList()
+        .map(
+            ({ title, url, authorName, type }) =>
+                `<li>
             <a class="${type2Class[type]}" href="${url}">${title}</a> - ${authorName}
-        </li>`)
+        </li>`
+        )
         .reverse()
         .join('\n')
     HISTORYS_CACHE.VALUE = ret
@@ -208,11 +216,17 @@ const getHistoryListElements = () => {
 }
 
 // 给现存的卡片添加点击事件
-document.querySelectorAll('.ContentItem').forEach(el => el.addEventListener('click', bindHistoryEvent))
+document
+    .querySelectorAll('.ContentItem')
+    .forEach((el) => el.addEventListener('click', bindHistoryEvent))
 
 // 插入历史记录卡片
-document.querySelector('.Topstory-container').children[1].children[1]
-    .insertAdjacentHTML('afterbegin', `<zh-history-card></zh-history-card>`)
+document
+    .querySelector('.Topstory-container')
+    .children[1].children[1].insertAdjacentHTML(
+        'afterbegin',
+        `<zh-history-card></zh-history-card>`
+    )
 
 // 插入 dialog
 document.body.insertAdjacentHTML('beforeEnd', `<zh-dialog></zh-dialog>`)
@@ -233,12 +247,13 @@ const targetNode = document.querySelector('.Topstory-recommend')
 const config = { childList: true, subtree: true }
 /** @type {MutationCallback} */
 const callback = (mutationsList) => {
-    for (let mutation of mutationsList) {
+    for (const mutation of mutationsList) {
         if (mutation.type !== 'childList') continue
-        mutation.addedNodes.forEach(node => {
+        mutation.addedNodes.forEach((node) => {
             /** @type {HTMLElement | undefined} */
             const contentItem = node.querySelector('.ContentItem')
-            if (contentItem) contentItem.addEventListener('click', bindHistoryEvent)
+            if (contentItem)
+                contentItem.addEventListener('click', bindHistoryEvent)
         })
     }
 }

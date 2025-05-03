@@ -11,51 +11,65 @@
 // @grant        GM_getValue
 // ==/UserScript==
 
-(function () {
-    'use strict'
+;(function () {
     // 自定义 logger
     const logger = {
         log: (...args) => console.log('[Correct-Next-Button]', ...args),
         error: (...args) => console.error('[Correct-Next-Button]', ...args),
     }
-    const type = { VIDEO: 'video', MULTIPART: 'multipart', COLLECTION: 'collection' }
+    const type = {
+        VIDEO: 'video',
+        MULTIPART: 'multipart',
+        COLLECTION: 'collection',
+    }
     const correctNextButton = (app) => {
         const videoData = app.videoData
         const { videos: videosCount } = videoData
-        const pageType = videosCount > 1 ? type.MULTIPART : (app.isSection ? type.COLLECTION : type.VIDEO)
+        const pageType =
+            videosCount > 1
+                ? type.MULTIPART
+                : app.isSection
+                  ? type.COLLECTION
+                  : type.VIDEO
         const pageStatus = app.continuousPlay
         const userStatus = GM_getValue(pageType)
-        if (userStatus == undefined) {
+        if (userStatus === undefined) {
             GM_setValue(pageType, pageStatus)
-        } else if (pageStatus != userStatus) {
+        } else if (pageStatus !== userStatus) {
             app.setContinuousPlay(userStatus)
         }
         logger.log(pageType, {
-            'collection': GM_getValue(type.COLLECTION),
-            'multipart': GM_getValue(type.MULTIPART),
-            'video': GM_getValue(type.VIDEO)
+            collection: GM_getValue(type.COLLECTION),
+            multipart: GM_getValue(type.MULTIPART),
+            video: GM_getValue(type.VIDEO),
         })
         document.querySelector('.switch-btn').addEventListener('click', () => {
             GM_setValue(pageType, !app.continuousPlay)
         })
     }
     const main = () => {
-        if (location.href.startsWith('https://www.bilibili.com/medialist/play/')) {
+        if (
+            location.href.startsWith('https://www.bilibili.com/medialist/play/')
+        ) {
             // todo
         } else {
-            let interval = setInterval(() => {
-                let app = document.querySelector('#app')
+            const interval = setInterval(() => {
+                const app = document.querySelector('#app')
                 if (app?.__vue__?.videoData) {
                     clearInterval(interval)
                     correctNextButton(app.__vue__)
                     // hook loadVideoData 保证从推荐视频加载新视频时重新判断视频类型
                     const __loadVideoData = app.__vue__.loadVideoData
-                    app.__vue__.loadVideoData = () => new Promise((resolve, rejct) =>
-                        __loadVideoData.call(this).then(
-                            res => { correctNextButton(app.__vue__); resolve(res) },
-                            error => rejct(error)
+                    app.__vue__.loadVideoData = () =>
+                        new Promise((resolve, rejct) =>
+                            __loadVideoData.call(this).then(
+                                (res) => {
+                                    correctNextButton(app.__vue__)
+                                    resolve(res)
+                                },
+                                (error) => rejct(error)
+                            )
                         )
-                    )
                 }
             }, 500)
         }

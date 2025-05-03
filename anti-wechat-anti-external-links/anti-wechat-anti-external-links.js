@@ -13,7 +13,7 @@ GM_addStyle(`
 body { display: none !important; }
 `)
 
-document.addEventListener('DOMContentLoaded', function() {
-    const targetUrl = document.querySelector(".weui-msg__desc").innerText;
-    window.location.href = targetUrl;
+document.addEventListener('DOMContentLoaded', () => {
+    const targetUrl = document.querySelector('.weui-msg__desc').innerText
+    window.location.href = targetUrl
 })

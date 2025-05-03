@@ -33,35 +33,41 @@ const secondLevel = hostname.split('.').slice(1).join('.')
  * @param {string[]} urls
  * @param {string} selector
  */
-const urlToSameSelector = (urls, selector) => Object.fromEntries(urls.map(url => [url, selector]))
+const urlToSameSelector = (urls, selector) =>
+    Object.fromEntries(urls.map((url) => [url, selector]))
 
 /**
  * Second level domain to a function to get selector by hostname
  * @type {Record<string, ()=>StringMap>}
  * */
 const getSelectorMap = {
-    "bilibili.com": () => Object.assign({ "manga.bilibili.com": ".search-input" },
-        urlToSameSelector([
-            'bilibili.com',
-            'www.bilibili.com',
-            't.bilibili.com',
-            'space.bilibili.com',
-        ], '.nav-search-input')
-    ),
-    "v2ex.com": () => ({ 'www.v2ex.com': '#search', }),
-    "stackoverflow.com": () => ({ 'stackoverflow.com': '.s-input' }),
-    "douban.com": () => ({
+    'bilibili.com': () =>
+        Object.assign(
+            { 'manga.bilibili.com': '.search-input' },
+            urlToSameSelector(
+                [
+                    'bilibili.com',
+                    'www.bilibili.com',
+                    't.bilibili.com',
+                    'space.bilibili.com',
+                ],
+                '.nav-search-input'
+            )
+        ),
+    'v2ex.com': () => ({ 'www.v2ex.com': '#search' }),
+    'stackoverflow.com': () => ({ 'stackoverflow.com': '.s-input' }),
+    'douban.com': () => ({
         'book.douban.com': '#inp-query',
-        'www.douban.com': '.inp input'
+        'www.douban.com': '.inp input',
     }),
-    "wikipedia.org": () => (urlToSameSelector([
-        'zh.wikipedia.org',
-        'en.wikipedia.org'
-    ], '.cdx-text-input__input',
-    )),
-    "greasyfork.org": () => ({
-        "greasyfork.org": ".home-search input"
-    })
+    'wikipedia.org': () =>
+        urlToSameSelector(
+            ['zh.wikipedia.org', 'en.wikipedia.org'],
+            '.cdx-text-input__input'
+        ),
+    'greasyfork.org': () => ({
+        'greasyfork.org': '.home-search input',
+    }),
 }
 
 /**
@@ -73,10 +79,11 @@ const getSelectorMap = {
 const isElementLoaded = async (selector, root = document, timeout = 1e4) => {
     const start = Date.now()
     while (root.querySelector(selector) === null) {
-        if (Date.now() - start > timeout) throw new Error(`Timeout: ${timeout}ms exceeded`)
-        await new Promise(resolve => requestAnimationFrame(resolve))
+        if (Date.now() - start > timeout)
+            throw new Error(`Timeout: ${timeout}ms exceeded`)
+        await new Promise((resolve) => requestAnimationFrame(resolve))
     }
-    return /** @type {HTMLElement} */(root.querySelector(selector))
+    return /** @type {HTMLElement} */ (root.querySelector(selector))
 }
 
 /** @param {HTMLInputElement} search */
@@ -84,29 +91,41 @@ const addSlashEvent = (search) => {
     const exceptActiveElement = ['INPUT', 'TEXTAREA']
     /** @type {(event: KeyboardEvent) => void } */
     const listener = (e) => {
-        if (e.key !== '/' || exceptActiveElement.includes(document?.activeElement?.tagName || "")) return
+        if (
+            e.key !== '/' ||
+            exceptActiveElement.includes(document?.activeElement?.tagName || '')
+        )
+            return
         e.preventDefault()
         search.focus()
     }
     document.addEventListener('keydown', listener)
 }
 
-
 const main = async () => {
     const getSelector = () => {
-        if (hostname in getSelectorMap) return getSelectorMap[hostname]()[hostname]
+        if (hostname in getSelectorMap)
+            return getSelectorMap[hostname]()[hostname]
         if (!(secondLevel in getSelectorMap)) return
         const selectorMap = getSelectorMap[secondLevel]()
-        return hostname in selectorMap ? selectorMap[hostname] : selectorMap['*']
+        return hostname in selectorMap
+            ? selectorMap[hostname]
+            : selectorMap['*']
     }
     const selector = getSelector()
-    if (!selector) console.error(`No selector was found for url origin, downgrading to match <input> element with class contains "search"`)
-    const searchElement = /** @type {HTMLDivElement?} */ (selector
-        ? await isElementLoaded(selector)
-        : await isElementLoaded('input[class*="search"]')
+    if (!selector)
+        console.error(
+            `No selector was found for url origin, downgrading to match <input> element with class contains "search"`
+        )
+    const searchElement = /** @type {HTMLDivElement?} */ (
+        selector
+            ? await isElementLoaded(selector)
+            : await isElementLoaded('input[class*="search"]')
     )
     if (!searchElement || !(searchElement instanceof HTMLInputElement)) {
-        throw Error(`Cannot detect search input element with selector ${selector}`)
+        throw new Error(
+            `Cannot detect search input element with selector ${selector}`
+        )
     }
     addSlashEvent(searchElement)
 }
