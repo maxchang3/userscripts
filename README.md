@@ -18,29 +18,11 @@
 
 ---
 
-### “如需浏览，请长按网址复制后使用浏览器访问” 
-
-[[Github](./anti-wechat-anti-external-links)] | [[GreasyFork](https://greasyfork.org/scripts/406675)]
-
-自动跳转微信对于外链的重定向界面。
-
----
-
 ### 矫正 B 站自动连播按钮 - 分P、合集、单视频开关分别独立 
 
 [[Github](./correct-next-button/)] | [[GreasyFork](https://greasyfork.org/scripts/451504)]
 
 顾名思义，让 B 站的自动连播按钮更好用，分 P、合集、视频按钮的状态互相独立。
-
----
-
-### 斜杠搜索
-
-[[Github](./slash-to-search/)] | [[GreasyFork](https://greasyfork.org/scripts/472986)]
-
-许多网站都实装，但是有一部分网站就不支持的功能，使用斜杠 ('/') 聚焦输入框。这个脚本为一些网站定制。
-
-实际上已经有很多同类的脚本，但是我不想用一个太通用的脚本，于是自己写了一个。
 
 ---
 
@@ -54,6 +36,23 @@
 
 ---
 
+### 斜杠搜索
+
+[[Github](./slash-to-search/)] | [[GreasyFork](https://greasyfork.org/scripts/472986)]
+
+许多网站都实装，但是有一部分网站就不支持的功能，使用斜杠 ('/') 聚焦输入框。这个脚本为一些网站定制。
+
+实际上已经有很多同类的脚本，但是我不想用一个太通用的脚本，于是自己写了一个。
+
+---
+
+### “如需浏览，请长按网址复制后使用浏览器访问” 
+
+[[Github](./anti-wechat-anti-external-links)] | [[GreasyFork](https://greasyfork.org/scripts/406675)]
+
+自动跳转微信对于外链的重定向界面。
+
+---
 ## 协议
 
 [MIT](./LICENSE)
