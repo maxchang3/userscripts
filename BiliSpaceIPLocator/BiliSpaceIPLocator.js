@@ -245,10 +245,7 @@ const main = async () => {
 
     const location = await getLocation(vmid)
 
-    if (!location) {
-        logger.error('获取 IP 属地失败')
-        return
-    }
+    if (!location) return
 
     logger.log(`获取 ${vmid}  IP 属地成功`, location)
 
