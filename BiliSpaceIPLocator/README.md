@@ -1,4 +1,6 @@
-# BiliSpaceIPLocator
+# 哔哩哔哩主页显示 IP 属地 - BiliSpaceIPLocator
+
+[[GreasyFork](https://greasyfork.org/scripts/534807)]
 
 在哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合使用[哔哩哔哩网页版显示 IP 属地](https://greasyfork.org/scripts/466815)脚本。
 
