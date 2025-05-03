@@ -12,7 +12,7 @@
 // @grant        GM.xmlHttpRequest
 // @grant        unsafeWindow
 // @require      https://update.greasyfork.org/scripts/400945/1055319/libBilibiliToken.js
-// @require      https://fastly.jsdelivr.net/npm/gm-extra
+// @require      https://fastly.jsdelivr.net/npm/gm-extra@0.0.1
 // @run-at       document-idle
 // @license      MIT
 // ==/UserScript==
