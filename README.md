@@ -1,6 +1,6 @@
-# maxchang3's UserScript Collection
+# Max Chang's UserScript Collection
 
-# maxchang3 的用户脚本合集
+# Max Chang 的用户脚本合集
 
 此项目将先前我编写的一些「**比较小型的、功能单一的、没必要单独成一个项目的**」的用户脚本整合在一起。方便规范化维护与问题反馈，也方便大家查找使用。
 
