@@ -7,6 +7,7 @@
 // @match        https://greasyfork.org/*
 // @icon            https://greasyfork.org/vite/assets/blacklogo16-DftkYuVe.png
 // @run-at       document-idle
+// @license    MIT
 // ==/UserScript==
 
 ;(() => {
