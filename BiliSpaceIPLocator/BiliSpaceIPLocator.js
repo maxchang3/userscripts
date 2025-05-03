@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         哔哩哔哩主页 IP 属地
 // @namespace    https://maxchang.me
-// @version      0.0.1
+// @version      0.0.2
 // @description  在哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合 哔哩哔哩网页版显示 IP 属地（https://greasyfork.org/scripts/466815）使用。
 // @author       maxchang3
 // @match        https://space.bilibili.com/*
