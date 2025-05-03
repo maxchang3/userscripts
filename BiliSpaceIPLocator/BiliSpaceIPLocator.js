@@ -13,7 +13,7 @@
 // @grant        unsafeWindow
 // @require      https://update.greasyfork.org/scripts/400945/1055319/libBilibiliToken.js
 // @require      https://fastly.jsdelivr.net/npm/gm-extra@0.0.1
-// @run-at       document-start
+// @run-at       document-idle
 // @license      MIT
 // ==/UserScript==
 /// <reference path="./types/global.d.ts" />
@@ -207,8 +207,10 @@ GM.registerMenuCommand(
     }
 )
 
+const appElement = /** @type {HTMLElement} */ (document.querySelector('#app'))
+
 // 等待 Header 中的信息加载出来
-GmExtra.querySelector(document.body, '.upinfo__main').then(
+GmExtra.querySelector(appElement, '.upinfo__main').then(
     async (upInfoMainElement) => {
         if (!hasToken) {
             requireAccessKey()
