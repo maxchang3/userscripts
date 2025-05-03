@@ -14,6 +14,16 @@
    - 在首次访问个人主页时，页面会弹出提示框请求获取 `access_key`。
    - 获取成功后该信息会保存在脚本储存中，后续访问时无需重复获取。
    - 由于进行了跨源请求，你需要**允许**脚本请求对应接口。
+5. 如果你无法访问以下链接：
+   - https://update.greasyfork.org/scripts/400945/1055319/libBilibiliToken.js
+   - https://fastly.jsdelivr.net/npm/gm-extra@0.0.1
+   
+   请替换脚本中的对应链接为：
+   - libBilibiliToken
+     - https://fastly.jsdelivr.net/gh/lzghzr/TampermonkeyJS@1.0.0/libBilibiliToken/libBilibiliToken.user.js
+     - https://raw.githubusercontent.com/lzghzr/TampermonkeyJS/refs/heads/master/libBilibiliToken/libBilibiliToken.js
+   - gm-extra
+     - https://unpkg.com/gm-extra
 
 ## 安装教程
 
