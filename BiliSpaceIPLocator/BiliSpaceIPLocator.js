@@ -38,19 +38,19 @@ const logger = (/*** @returns {Record<LogLevel, (...args: unknown[]) => void>} *
         const fontFamily =
             "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"
 
-            console[logMethod](
-                `%c ${scriptname} %c v${scriptversion} %c ${tag} `,
-                `padding: 2px 6px; border-radius: 3px 0 0 3px; color: #fff; background: #FF6699; font-weight: bold; ${fontFamily}`,
-                `padding: 2px 6px; color: #fff; background: #FF9999; font-weight: bold; ${fontFamily}`,
-                `padding: 2px 6px; border-radius: 0 3px 3px 0; color: #fff; background: ${colors[logMethod]}; font-weight: bold; ${fontFamily}`,
-                ...args
-            )
-        }
-        return {
-            log: (...args) => log('log', 'LOG', ...args),
-            error: (...args) => log('error', 'ERROR', ...args),
-        }
-    })()
+        console[logMethod](
+            `%c ${scriptname} %c v${scriptversion} %c ${tag} `,
+            `padding: 2px 6px; border-radius: 3px 0 0 3px; color: #fff; background: #FF6699; font-weight: bold; ${fontFamily}`,
+            `padding: 2px 6px; color: #fff; background: #FF9999; font-weight: bold; ${fontFamily}`,
+            `padding: 2px 6px; border-radius: 0 3px 3px 0; color: #fff; background: ${colors[logMethod]}; font-weight: bold; ${fontFamily}`,
+            ...args
+        )
+    }
+    return {
+        log: (...args) => log('log', 'LOG', ...args),
+        error: (...args) => log('error', 'ERROR', ...args),
+    }
+})()
 
 const tokenClient = new BilibiliToken()
 
