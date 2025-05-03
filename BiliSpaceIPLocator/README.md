@@ -63,3 +63,4 @@ graph LR
 
 - [lzghzr](https://github.com/lzghzr) 的 [libBilibiliToken](https://github.com/lzghzr/TampermonkeyJS/blob/master/libBilibiliToken/libBilibiliToken.ts) - 简化了获取 `access_key`的过程。
 - [Bilibili 哔哩哔哩视频点踩](https://greasyfork.org/scripts/487644) - 参考了部分代码。
+- 青椒种子 - 协助测试。
