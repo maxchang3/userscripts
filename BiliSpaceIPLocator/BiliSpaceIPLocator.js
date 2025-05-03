@@ -2,7 +2,7 @@
 // @name         哔哩哔哩主页 IP 属地
 // @namespace    https://maxchang.me
 // @version      0.0.1
-// @description  在哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合使用 哔哩哔哩网页版显示 IP 属地（https://greasyfork.org/scripts/466815）脚本。
+// @description  在哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合 哔哩哔哩网页版显示 IP 属地（https://greasyfork.org/scripts/466815）使用。
 // @author       maxchang3
 // @match        https://space.bilibili.com/*
 // @icon         https://www.bilibili.com/favicon.ico
@@ -24,19 +24,19 @@
 
 // biome-ignore format: keep type annotation
 const logger = (/*** @returns {Record<LogLevel, (...args: unknown[]) => void>} */() => {
-        const { name: scriptname, version: scriptversion } = GM_info.script
-        /**
-         * @param {LogLevel} logMethod
-         * @param {string} tag
-         * @param {unknown[]} args
-         */
-        const log = (logMethod, tag, ...args) => {
-            const colors = {
-                log: '#2c3e50',
-                error: '#ff4500',
-            }
-            const fontFamily =
-                "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"
+    const { name: scriptname, version: scriptversion } = GM_info.script
+    /**
+     * @param {LogLevel} logMethod
+     * @param {string} tag
+     * @param {unknown[]} args
+     */
+    const log = (logMethod, tag, ...args) => {
+        const colors = {
+            log: '#2c3e50',
+            error: '#ff4500',
+        }
+        const fontFamily =
+            "font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;"
 
             console[logMethod](
                 `%c ${scriptname} %c v${scriptversion} %c ${tag} `,
