@@ -167,7 +167,7 @@ const injectLocation = (
     /** @type {string} */ location,
     /** @type {HTMLDivElement} */ upInfoMainElement,
     /** @type {string} */ upInfoSelector,
-    /** @type {Record< string, string>} */ overrideStyle = {}
+    /** @type {Partial<HTMLElement['style']>} */ overrideStyle = {}
 ) => {
     const upInfoTopElement = upInfoMainElement.querySelector(upInfoSelector)
     if (!upInfoTopElement) {
