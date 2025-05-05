@@ -52,6 +52,14 @@ const logger = (/*** @returns {Record<LogLevel, (...args: unknown[]) => void>} *
     }
 })()
 
+const getVmid = () => {
+    const URLWithoutQuery = window.location.origin + window.location.pathname
+    const vmidMatch = URLWithoutQuery.match(/space\.bilibili\.com\/(\d+)(?:\/|$)/)
+    if (!vmidMatch || vmidMatch.length < 2) return null
+    const vmid = vmidMatch[1]
+    return vmid
+}
+
 const tokenClient = new BilibiliToken()
 
 const updateAccessKey = async () => {
@@ -165,19 +173,12 @@ const requireAccessKey = async () => {
 
 const injectLocation = (
     /** @type {string} */ location,
-    /** @type {HTMLDivElement} */ root,
-    /** @type {string} */ upInfoSelector,
+    /** @type {HTMLDivElement} */ upinfoEl,
     /** @type {Partial<HTMLElement['style']>} */ overrideStyle = {}
 ) => {
-    const upInfoElement = root.querySelector(upInfoSelector)
-    if (!upInfoElement) {
-        logger.error('未找到 UP 主信息元素')
-        return
-    }
+    const locationEl = document.createElement('div')
 
-    const locationElement = document.createElement('div')
-
-    Object.assign(locationElement.style, {
+    Object.assign(locationEl.style, {
         color: '#fff',
         fontSize: '10px',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -189,9 +190,9 @@ const injectLocation = (
         ...overrideStyle,
     })
 
-    locationElement.className = 'location'
-    locationElement.innerText = location
-    upInfoElement.appendChild(locationElement)
+    locationEl.className = 'location'
+    locationEl.innerText = location
+    upinfoEl.appendChild(locationEl)
 }
 
 if (hasToken)
@@ -225,24 +226,26 @@ const main = async () => {
     const upInfoSelector = isFreshSpace ? '.upinfo-detail__top' : '.h-basic div'
 
     // 等待 Header 中的信息加载出来
-    const upInfoRootElement = /** @type {HTMLDivElement | null} */ (
-        await GmExtra.querySelector(appElement, upInfoRootSelector)
-    )
+    const upInfoRootEl = await GmExtra.querySelector(appElement, upInfoRootSelector)
 
-    if (!upInfoRootElement) {
+    if (!upInfoRootEl || !(upInfoRootEl instanceof HTMLDivElement)) {
+        logger.error('未找到 UP 主信息根元素')
+        return
+    }
+
+    const upInfoEl = upInfoRootEl.querySelector(upInfoSelector)
+
+    if (!upInfoEl || !(upInfoEl instanceof HTMLDivElement)) {
         logger.error('未找到 UP 主信息元素')
         return
     }
 
-    const URLWithoutQuery = window.location.origin + window.location.pathname
-    const vmidMatch = URLWithoutQuery.match(/space\.bilibili\.com\/(\d+)(?:\/|$)/)
+    const vmid = getVmid()
 
-    if (!vmidMatch || vmidMatch.length < 2) {
+    if (!vmid) {
         logger.error('未找到 vmid', window.location.href)
         return
     }
-
-    const vmid = vmidMatch[1]
 
     const location = await getLocation(vmid)
 
@@ -252,8 +255,7 @@ const main = async () => {
 
     injectLocation(
         location,
-        upInfoRootElement,
-        upInfoSelector,
+        upInfoEl,
         isFreshSpace
             ? {}
             : {
