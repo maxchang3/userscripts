@@ -165,12 +165,12 @@ const requireAccessKey = async () => {
 
 const injectLocation = (
     /** @type {string} */ location,
-    /** @type {HTMLDivElement} */ upInfoMainElement,
+    /** @type {HTMLDivElement} */ root,
     /** @type {string} */ upInfoSelector,
     /** @type {Partial<HTMLElement['style']>} */ overrideStyle = {}
 ) => {
-    const upInfoTopElement = upInfoMainElement.querySelector(upInfoSelector)
-    if (!upInfoTopElement) {
+    const upInfoElement = root.querySelector(upInfoSelector)
+    if (!upInfoElement) {
         logger.error('未找到 UP 主信息元素')
         return
     }
@@ -191,7 +191,7 @@ const injectLocation = (
 
     locationElement.className = 'location'
     locationElement.innerText = location
-    upInfoTopElement.appendChild(locationElement)
+    upInfoElement.appendChild(locationElement)
 }
 
 if (hasToken)
@@ -207,6 +207,10 @@ GM.registerMenuCommand(
     }
 )
 const main = async () => {
+    if (!hasToken) {
+        requireAccessKey()
+        return
+    }
     const biliMainHeader = await GmExtra.querySelector(document.body, '#biliMainHeader')
     const isFreshSpace = biliMainHeader?.tagName === 'HEADER'
 
@@ -217,18 +221,15 @@ const main = async () => {
         return
     }
 
-    const upInfoMainSelector = isFreshSpace ? '.upinfo__main' : '.h-inner'
+    const upInfoRootSelector = isFreshSpace ? '.upinfo__main' : '.h-inner'
     const upInfoSelector = isFreshSpace ? '.upinfo-detail__top' : '.h-basic div'
 
     // 等待 Header 中的信息加载出来
-    const upInfoMainElement = await GmExtra.querySelector(appElement, upInfoMainSelector)
+    const upInfoRootElement = /** @type {HTMLDivElement | null} */ (
+        await GmExtra.querySelector(appElement, upInfoRootSelector)
+    )
 
-    if (!hasToken) {
-        requireAccessKey()
-        return
-    }
-
-    if (!upInfoMainElement) {
+    if (!upInfoRootElement) {
         logger.error('未找到 UP 主信息元素')
         return
     }
@@ -251,7 +252,7 @@ const main = async () => {
 
     injectLocation(
         location,
-        /** @type {HTMLDivElement} */ (upInfoMainElement),
+        upInfoRootElement,
         upInfoSelector,
         isFreshSpace
             ? {}
