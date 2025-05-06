@@ -32,7 +32,9 @@
 
 ### 知乎历史记录
 
-[[Github](./zhihu-history/)] | [[GreasyFork](https://greasyfork.org/scripts/459852)]
+~~[[Github](./zhihu-history/)] | [[GreasyFork](https://greasyfork.org/scripts/459852)]~~
+
+已经全新重构，见 [zhihu-history](https://github.com/maxchang3/zhihu-history)
 
 > 刷网页版的时候最糟心的事情可能就是正在看一个回答一不小心各种姿势让他刷没了，偏偏你又找不回来了，今天又深恶痛绝了一次，于是乎就愤慨之余写了这么一个小垃圾。
 
