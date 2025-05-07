@@ -6,11 +6,8 @@
 [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome)](https://biomejs.dev)
 [![code style](https://img.shields.io/badge/Max_Chang-black?style=flat&logoColor=black&label=Code%20Style)](https://github.com/maxchang3/biome-config)<sup><s>(Is that really a thing?)</s></sup>
 
-整合了我的编写的「**小型、功能单一**」的用户脚本，方便维护和反馈，同时也方便大家查找使用。
+我编写的一些「**小型、功能单一**」的用户脚本。
 
-对于日后发展为较为复杂的脚本，我将考虑为其创建独立的项目。
-
-> 许多早期脚本秉承了「能用就行」的原则，因此代码可能不够优雅，也未考虑适配性。欢迎通过 issue 反馈问题或提交 PR 改进！
 
 ## 导航
 
