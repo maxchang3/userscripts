@@ -39,6 +39,12 @@
 
 ---
 
+### 知乎深色模式
+
+[[Github](./zhihu-dark-mode/)] |
+
+为知乎添加深色模式。
+
 ### 斜杠搜索
 
 [[Github](./slash-to-search/)] | [[GreasyFork](https://greasyfork.org/scripts/472986)]
