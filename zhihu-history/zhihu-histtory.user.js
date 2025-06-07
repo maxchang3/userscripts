@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         知乎历史记录
+// @name         ~~知乎历史记录~~
 // @namespace    https://maxchang.me
 // @version      0.7
-// @description  给知乎添加历史记录
+// @description  ~~给知乎添加历史记录~~ (已在 [zhihu-history](https://github.com/maxchang3/zhihu-history) 单独维护)
 // @author       MaxChang3
 // @match        https://www.zhihu.com/
 // @match        https://www.zhihu.com/search*
