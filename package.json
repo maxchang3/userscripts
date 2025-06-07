@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "name": "@maxchang/userscripts",
   "version": "0.0.1",
   "author": "maxchang3",
