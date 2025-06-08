@@ -1,7 +1,7 @@
+// @ts-check
 import { readFile, readdir } from 'node:fs/promises'
 import { writeFile } from 'node:fs/promises'
 import path from 'node:path'
-// @ts-check
 import GreasyForkURLMap from './greasyfork.json' with { type: 'json' }
 
 /**
@@ -23,7 +23,6 @@ import GreasyForkURLMap from './greasyfork.json' with { type: 'json' }
 /**
  * 从文本内容中解析用户脚本元数据
  * @param {string} text - 用户脚本内容
- * @returns {Metadata}
  */
 function parseMetadata(text) {
     const userScriptBlockRegex = /\/\/ ==UserScript==([\s\S]*?)\/\/ ==\/UserScript==/
@@ -32,6 +31,7 @@ function parseMetadata(text) {
     if (!match?.[1]) return { name: '', description: '', icon: '' }
 
     const metadataBlock = match[1]
+    /** @type {Metadata} */
     const metadata = { name: '', description: '', icon: '' }
     const lines = metadataBlock.split('\n')
 
@@ -57,7 +57,6 @@ function parseMetadata(text) {
 /**
  * 从URL中提取根域名
  * @param {string} url - URL字符串
- * @returns {string}
  */
 function extractRootDomain(url) {
     if (!url) return ''
@@ -72,7 +71,6 @@ function extractRootDomain(url) {
 
 /**
  * 获取所有用户脚本目录
- * @returns {Promise<string[]>}
  */
 async function getUserScriptDirectories() {
     const items = await readdir('.', { withFileTypes: true })
@@ -87,11 +85,11 @@ async function getUserScriptDirectories() {
 /**
  * 从目录中解析用户脚本
  * @param {string} dirName - 目录名称
- * @returns {Promise<UserScript[]>}
  */
 async function parseUserScriptsFromDirectory(dirName) {
     try {
         const files = await readdir(dirName, { withFileTypes: true })
+        /** @type {UserScript[]} */
         const userScripts = []
 
         for (const file of files) {
@@ -120,7 +118,6 @@ async function parseUserScriptsFromDirectory(dirName) {
 /**
  * 为用户脚本生成markdown表格行
  * @param {UserScript} script - 用户脚本对象
- * @returns {string}
  */
 function generateTableRow(script) {
     const { metadata, entry, dir } = script
@@ -181,7 +178,7 @@ async function main() {
         await writeFile('README.md', readmeContent, 'utf-8')
         console.log('README.md 生成成功！')
     } catch (error) {
-        console.error('生成README时出错:', error.message)
+        console.error('生成 README 时出错:', error.message)
         process.exit(1)
     }
 }
