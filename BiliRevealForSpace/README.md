@@ -2,8 +2,8 @@
   <img width="300" src="https://github.com/user-attachments/assets/98e82a51-d85d-49cf-aed8-01ba1d8fb383">
 </p>
 
-# 哔哩哔哩主页显示 IP 属地 - BiliSpaceIPLocator 
-![Greasy Fork 总下载量](https://img.shields.io/greasyfork/dt/534807?style=flat-square&color=444) ![](https://img.shields.io/badge/安装方式:-777) [![使用 Greasy Fork 安装](https://img.shields.io/badge/Greasy_Fork-7D160D)](https://greasyfork.org/scripts/534807) [![使用 Github 安装](https://img.shields.io/badge/Github-3D7D3F)](https://github.com/maxchang3/userscripts/raw/refs/heads/main/BiliSpaceIPLocator/BiliSpaceIPLocator.user.js)
+# BiliReveal For Space - 哔哩哔哩主页显示 IP 属地 
+![Greasy Fork 总下载量](https://img.shields.io/greasyfork/dt/534807?style=flat-square&color=444) ![](https://img.shields.io/badge/安装方式:-777) [![使用 Greasy Fork 安装](https://img.shields.io/badge/Greasy_Fork-7D160D)](https://greasyfork.org/scripts/534807) [![使用 Github 安装](https://img.shields.io/badge/Github-3D7D3F)](https://github.com/maxchang3/userscripts/raw/refs/heads/main/BiliRevealForSpace/BiliRevealForSpace.user.js)
 
 
 在哔哩哔哩主页显示 IP 属地。仅支持显示个人主页。为了获得完整体验，建议配合「[哔哩哔哩网页版显示 IP 属地](https://github.com/MaxChang3/Bilibili-Web-Show-IP-Location)」使用。
