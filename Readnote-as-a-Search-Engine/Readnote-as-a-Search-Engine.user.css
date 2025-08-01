@@ -19,6 +19,9 @@
 		top: 35%;
 		left: 55% !important;
 	}
+	.side-bar {
+		    z-index: 999;
+	}
 	@media screen and (max-width: 695px) {
 		.input-box {
 			width: 80% !important;
