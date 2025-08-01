@@ -25,8 +25,15 @@ import GreasyForkURLMap from './greasyfork.json' with { type: 'json' }
  * @param {string} text - 用户脚本内容
  */
 function parseMetadata(text) {
+    // Support both UserScript and UserStyle metadata blocks
     const userScriptBlockRegex = /\/\/ ==UserScript==([\s\S]*?)\/\/ ==\/UserScript==/
-    const match = text.match(userScriptBlockRegex)
+    const userStyleBlockRegex = /\/\* ==UserStyle==([\s\S]*?)==\/UserStyle== \*\//
+    let match = text.match(userScriptBlockRegex)
+    let isStyle = false
+    if (!match) {
+        match = text.match(userStyleBlockRegex)
+        isStyle = !!match
+    }
 
     if (!match?.[1]) return { name: '', description: '', icon: '' }
 
@@ -36,6 +43,7 @@ function parseMetadata(text) {
     const lines = metadataBlock.split('\n')
 
     for (const line of lines) {
+        // For UserStyle, lines may start with @, for UserScript, may start with // @
         const metaMatch = line.match(/^(?:[ \t]*(?:\/\/)?[ \t]*@)([\w-]+)[ \t]+(.+?)[ \t]*$/)
         if (!metaMatch) continue
 
@@ -93,7 +101,11 @@ async function parseUserScriptsFromDirectory(dirName) {
         const userScripts = []
 
         for (const file of files) {
-            if (!file.isFile() || !file.name.endsWith('.user.js')) continue
+            if (
+                !file.isFile() ||
+                (!file.name.endsWith('.user.js') && !file.name.endsWith('.user.css'))
+            )
+                continue
 
             try {
                 const content = await readFile(path.join(dirName, file.name), 'utf-8')
@@ -128,8 +140,12 @@ function generateTableRow(script) {
     const iconMarkdown = `<img src="${icon}" width="32px" />`
     const installLink = `https://raw.githubusercontent.com/maxchang3/userscripts/main/${dir}/${entry}`
 
-    // 生成安装徽章
-    const githubInstallBadge = `[![安装](https://img.shields.io/badge/GithubRaw-安装-black)](${installLink})`
+    // 生成安装徽章，根据文件类型区分
+    let installBadgeLabel = 'GithubRaw'
+    if (entry.endsWith('.user.css')) {
+        installBadgeLabel = 'UserCSS'
+    }
+    const githubInstallBadge = `[![安装](https://img.shields.io/badge/${installBadgeLabel}-安装-black)](${installLink})`
 
     // 检查Greasy Fork URL
     const greasyforkUrl = GreasyForkURLMap[dir]
