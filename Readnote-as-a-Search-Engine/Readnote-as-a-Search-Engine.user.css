@@ -1,12 +1,12 @@
 /* ==UserStyle==
 @name         只用小红书搜索
 @namespace     https://maxchang.me
-@version         0.0.2
+@version         0.0.3
 @description    使用小红书网页版作为搜索引擎，隐藏主页的时间线，搜索框页面居中。RAASE™ (Rednote as a Search Engine)
 @author        Max Chang
 @license      MIT
 ==/UserStyle== */
-@-moz-document url-prefix("https://www.xiaohongshu.com/explore") {
+@-moz-document regexp("^https://www\\.xiaohongshu\\.com/explore(?:\\?.*)?$") {
 	#mfContainer {
 		display: none;
 	}
