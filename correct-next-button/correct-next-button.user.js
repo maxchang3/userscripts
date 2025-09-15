@@ -10,6 +10,7 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // @grant        GM_addStyle
+// @grant        GM_registerMenuCommand
 // ==/UserScript==
 
 // 自定义 logger
@@ -54,8 +55,12 @@ const type = {
     PLAYLIST: 'playlist',
 }
 
-const correctNextButton = (app) => {
-    const videoData = app.videoData
+const correctNextButton = () => {
+    if (!globalApp) {
+        logger.error('globalApp is not available')
+        return
+    }
+    const videoData = globalApp.videoData
     if (!videoData) {
         logger.error('videoData is not available')
         return
@@ -64,17 +69,17 @@ const correctNextButton = (app) => {
     const pageType =
         videosCount > 1
             ? type.MULTIPART
-            : app.isSection
+            : globalApp.isSection
               ? type.COLLECTION
-              : app.playlist?.type
+              : globalApp.playlist?.type
                 ? type.PLAYLIST
                 : type.VIDEO
-    const pageStatus = app.continuousPlay
+    const pageStatus = globalApp.continuousPlay
     const userStatus = GM_getValue(pageType)
     if (userStatus === undefined) {
         GM_setValue(pageType, pageStatus)
     } else if (pageStatus !== userStatus) {
-        app.setContinuousPlay(userStatus)
+        globalApp.setContinuousPlay(userStatus)
     }
     logger.log(pageType, {
         collection: GM_getValue(type.COLLECTION),
@@ -88,29 +93,31 @@ const correctNextButton = (app) => {
             e.preventDefault()
             e.stopPropagation()
             switchButton.classList.toggle('on')
-            app.setContinuousPlay(!app.continuousPlay)
-            GM_setValue(pageType, app.continuousPlay)
+            globalApp.setContinuousPlay(!globalApp.continuousPlay)
+            GM_setValue(pageType, globalApp.continuousPlay)
         })
-        switchButton.classList.toggle('on', app.continuousPlay)
+        switchButton.classList.toggle('on', globalApp.continuousPlay)
     } else {
         switchButton.addEventListener('click', () => {
-            GM_setValue(pageType, !app.continuousPlay)
+            GM_setValue(pageType, !globalApp.continuousPlay)
         })
     }
 }
 
 let lastVueInstance = null
+let globalApp = null
 const hookVueInstance = (vueInstance) => {
     if (!vueInstance || vueInstance === lastVueInstance) return
     lastVueInstance = vueInstance
-    correctNextButton(vueInstance)
+    globalApp = vueInstance // 赋值全局变量
+    correctNextButton()
     // hook loadVideoData 保证从推荐视频加载新视频时重新判断视频类型
     if (!vueInstance.__correctNextButtonHooked) {
         const __loadVideoData = vueInstance.loadVideoData
         vueInstance.loadVideoData = function () {
             return __loadVideoData.call(this).then(
                 (res) => {
-                    correctNextButton(vueInstance)
+                    correctNextButton()
                     return res
                 },
                 (error) => Promise.reject(error)
@@ -134,5 +141,22 @@ const observeVueInstance = () => {
     })
     observer.observe(appContainer, { childList: true, subtree: true })
 }
+const registerMenuCommands = () => {
+    Object.entries(type).forEach(([key, value]) => {
+        const status = GM_getValue(value)
+        const statusText = status ? '✅ 开启' : '❌ 关闭'
+        const typeMap = {
+            [type.VIDEO]: '单视频',
+            [type.MULTIPART]: '分P',
+            [type.COLLECTION]: '合集',
+            [type.PLAYLIST]: '收藏列表',
+        }
+        GM_registerMenuCommand(`${typeMap[value]} 连播: ${statusText}`, () => {
+            GM_setValue(value, !status)
+            location.reload()
+        })
+    })
+}
 
+registerMenuCommands()
 observeVueInstance()
