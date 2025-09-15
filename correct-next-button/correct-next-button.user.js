@@ -102,6 +102,16 @@ const correctNextButton = () => {
             GM_setValue(pageType, !globalApp.continuousPlay)
         })
     }
+    // 合集的最后一个视频不进行自动连播
+    if (pageType === type.COLLECTION) {
+        logger.log('对于合集的最后一个视频不进行自动连播')
+        const currentBvid = globalApp.bvid
+        const lastBvid = globalApp.sectionsInfo.sections[0].episodes.at(-1).bvid
+        if (currentBvid === lastBvid) {
+            globalApp.setContinuousPlay(false)
+            switchButton.classList.remove('on')
+        }
+    }
 }
 
 let lastVueInstance = null
