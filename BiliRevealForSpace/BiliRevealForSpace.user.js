@@ -119,12 +119,17 @@ const getLocation = async (/** @type {string} */ vmid) => {
         const locationCards = spaceResponse.data.card.space_tag.filter(
             (tag) => tag.type === 'location'
         )
-        if (locationCards.length === 0) {
+        const locationCardsBottom = spaceResponse.data.card.space_tag_bottom.filter(
+            (tag) => tag.type === 'location'
+        )
+
+        const location = locationCards[0]?.title || locationCardsBottom[0]?.title
+        if (!location) {
             logger.error('该 UP 主无 IP 属地')
             return null
         }
 
-        return locationCards[0].title
+        return location
     } catch (error) {
         logger.error('请求出错', error)
         return null

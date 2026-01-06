@@ -21,6 +21,7 @@ interface Card {
     attentions: null
     fans: number
     space_tag: SpaceTag[]
+    space_tag_bottom: SpaceTag[]
 }
 
 export interface SpaceTag {
