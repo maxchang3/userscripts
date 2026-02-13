@@ -7,6 +7,7 @@
 // @match        https://www.zhihu.com/*
 // @icon         https://static.zhihu.com/heifetz/favicon.ico
 // @grant        GM_cookie
+// @license      MIT
 // ==/UserScript==
 // @ts-check
 /// <reference types="@types/tampermonkey" />
