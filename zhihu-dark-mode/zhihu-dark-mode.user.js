@@ -2,7 +2,7 @@
 // @name       知乎网页版深色模式
 // @namespace    https://maxchang.me
 // @version      0.0.1
-// @description  为知乎网页版提供深色模式适配与自动切换
+// @description  为知乎网页版提供深色模式适配与自动切换（由于知乎限制，自动切换时仍需手动刷新才能使所有组件生效）。
 // @author       Max
 // @match        https://www.zhihu.com/*
 // @icon         https://static.zhihu.com/heifetz/favicon.ico
