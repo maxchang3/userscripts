@@ -102,6 +102,14 @@ const correctNextButton = () => {
             GM_setValue(pageType, !globalApp.continuousPlay)
         })
     }
+    // 分 P 的最后一个视频不进行自动连播
+    if (pageType === type.MULTIPART) {
+        logger.log('对于分 P 的最后一个视频不进行自动连播')
+        if (videoData.embedPlayer.p === videoData.videos) {
+            globalApp.setContinuousPlay(false)
+            switchButton.classList.remove('on')
+        }
+    }
     // 合集的最后一个视频不进行自动连播
     if (pageType === type.COLLECTION) {
         logger.log('对于合集的最后一个视频不进行自动连播')
