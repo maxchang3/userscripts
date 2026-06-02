@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         只用小红书搜索 - JS 版
 // @namespace    https://maxchang.me
-// @version      0.0.3
+// @version      0.1.0
 // @description  使用小红书网页版作为搜索引擎，隐藏主页的时间线，搜索框页面居中。RAASE™ (Rednote as a Search Engine)
 // @author       Max Chang
 // @license      MIT
@@ -18,32 +18,69 @@
 console.log('script loaded', performance.now())
 ;(() => {
     const STYLE_CSS = `
-    #mfContainer {
-      display: none;
+    /** 信息流初始样式（过渡用） */
+    #mfContainer:not(:has(.search-area)), /** 旧版本容器不包含搜索区域 */
+    #exploreFeeds,
+    .channel-container {
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+      will-change: opacity, transform;
     }
+
+    /** 净化信息流 */
+    #mfContainer:not(:has(.search-area)),
+    #exploreFeeds,
+    .channel-container,
+    #ssr-skeleton {
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none !important;
+    }
+
+    #mfContainer:has(.search-area),
+    body {
+      overflow: hidden !important;
+    }
+
     .mask-paper {
-      background: none!important;
-      backdrop-filter: none!important;
+      background: none !important;
+      backdrop-filter: none !important;
       min-height: 100vh;
     }
-    .input-box {
+
+    /* 调整搜索区域的整体垂直位置（新版） */
+    .search-area {
+      transform: translateY(155%);
+    }
+
+    /* 调整独立搜索框的位置（旧版） */
+    .input-box:not(.search-box-in-content) {
       top: 35%;
       left: 55% !important;
     }
+
     .side-bar {
       z-index: 999;
     }
+
+    /** 移动端搜索框适配 */
     @media screen and (max-width: 695px) {
-      .input-box {
+      .input-box:not(.search-box-in-content) {
         width: 80% !important;
         padding: 0 84px 0 16px !important;
       }
+
       .min-width-search-icon {
-        display: none !important
+        display: none !important;
       }
+
       .input-button {
         opacity: 1 !important;
       }
+
       #search-input {
         padding: 10px;
       }
