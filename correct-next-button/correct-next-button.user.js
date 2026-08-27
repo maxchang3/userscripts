@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         矫正 b 站自动连播按钮 - 分P、合集、单视频开关分别独立
 // @namespace    http://maxchang.me
-// @version      0.3.2
+// @version      0.3.3
 // @description  关于我不想要哔哩哔哩自动连播只想在分 P 中跳转但是阿 b 把他们混为一谈这件事。
 // @author       MaxChang3
 // @match        https://www.bilibili.com/video/*
@@ -40,7 +40,7 @@ const prepareSwitchButton = () => {
     continuousBtn.appendChild(txt)
     continuousBtn.appendChild(switchBtn)
 
-    const headerLeft = document.querySelector('.header-left')
+    const headerLeft = document.querySelector('.header-top .left')
     headerLeft?.appendChild(continuousBtn)
     GM_addStyle(
         `.switch-btn{--switch-btn-width:30px;--switch-btn-height:20px;--switch-btn-gap:2px;cursor:pointer;position:relative;display:inline-block;box-sizing:border-box;border-radius:calc(var(--switch-btn-height)/ 2);border-radius:calc(var(--switch-btn-height)/ 2);width:var(--switch-btn-width);width:var(--switch-btn-width);height:var(--switch-btn-height);height:var(--switch-btn-height);background-color:var(--graph_bg_thick);background-color:var(--graph_bg_thick);transition:.2s}.switch-btn .switch-block{position:absolute;border-radius:50%;top:var(--switch-btn-gap);top:var(--switch-btn-gap);left:var(--switch-btn-gap);left:var(--switch-btn-gap);width:calc(var(--switch-btn-height) - calc(2 * var(--switch-btn-gap)));width:calc(var(--switch-btn-height) - calc(2 * var(--switch-btn-gap)));height:calc(var(--switch-btn-height) - calc(2 * var(--switch-btn-gap)));height:calc(var(--switch-btn-height) - calc(2 * var(--switch-btn-gap)));background-color:var(--text_white);background-color:var(--text_white);transition:.2s}.switch-btn.on{background:var(--brand_blue);background:var(--brand_blue)}.switch-btn.on .switch-block{left:calc(calc(var(--switch-btn-width) - var(--switch-btn-height)) + var(--switch-btn-gap));left:calc(calc(var(--switch-btn-width) - var(--switch-btn-height)) + var(--switch-btn-gap))}.continuous-btn{cursor:pointer;display:flex;align-items:center}.continuous-btn .txt{color:var(--text3);color:var(--text3);font-size:14px;margin-right:4px}`
